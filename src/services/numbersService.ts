@@ -1,6 +1,6 @@
 import axios from "axios";
 
-const BASE_URL = "http://numbersapi.com";
+const BASE_URL = "https://numbersapi.com";
 
 export const getTriviaFact = async (num: number) => {
   try {
@@ -8,8 +8,8 @@ export const getTriviaFact = async (num: number) => {
       headers: {
         accept: "*/*",
         host: "numbersapi.com",
-        origin: "http://numbersapi.com",
-        referer: "http://numbersapi.com",
+        origin: "https://numbersapi.com",
+        referer: "https://numbersapi.com",
       },
     });
     return response.data;
