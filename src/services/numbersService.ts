@@ -7,6 +7,8 @@ export const getTriviaFact = async (num: number) => {
     const response = await axios.get(`${BASE_URL}/${num}`, {
       headers: {
         Accept: "*/*",
+        Origin: "http://numbersapi.com",
+        Referer: "http://numbersapi.com",
       },
     });
     return response.data;
