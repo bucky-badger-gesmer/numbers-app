@@ -184,7 +184,7 @@ const Home: React.FC = () => {
   return (
     <IonPage>
       <IonHeader>
-        <IonToolbar>
+        <IonToolbar color="tertiary">
           <IonTitle>Numbers API App</IonTitle>
         </IonToolbar>
       </IonHeader>
@@ -237,7 +237,9 @@ const Home: React.FC = () => {
                       <IonButton
                         expand="full"
                         onClick={handleRandomClick}
-                        color="light"
+                        shape="round"
+                        // fill="outline"
+                        color="tertiary"
                       >
                         Random Number Trivia Fact
                       </IonButton>
