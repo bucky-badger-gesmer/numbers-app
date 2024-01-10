@@ -80,6 +80,9 @@ const Home: React.FC = () => {
     const regex = /^-?(3000|[12]?[0-9]{1,3})$/;
     const isValid = regex.test(input);
     setNumericValue(+input);
+    if (isValid) {
+      setIsValid(true);
+    }
     console.log("poopnumber", isValid);
     return isValid;
   };
@@ -99,7 +102,7 @@ const Home: React.FC = () => {
         setFact(mathFact);
         setLoading(false);
       case "year":
-        const yearFact = await getFact(-2999, selectedValue);
+        const yearFact = await getFact(numericValue, selectedValue);
         setFact(yearFact);
         setLoading(false);
     }
@@ -176,13 +179,13 @@ const Home: React.FC = () => {
     <IonPage>
       <IonHeader>
         <IonToolbar>
-          <IonTitle>Numbers</IonTitle>
+          <IonTitle>Numbers API App</IonTitle>
         </IonToolbar>
       </IonHeader>
       <IonContent fullscreen>
         <IonHeader collapse="condense">
           <IonToolbar>
-            <IonTitle size="large">Numbers</IonTitle>
+            <IonTitle size="large">Numbers API App</IonTitle>
           </IonToolbar>
         </IonHeader>
         <IonContent>
