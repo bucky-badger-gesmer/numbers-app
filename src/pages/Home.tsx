@@ -83,14 +83,11 @@ const Home: React.FC = () => {
     if (isValid) {
       setIsValid(true);
     }
-    console.log("poopnumber", isValid);
     return isValid;
   };
 
   const handleClick = async () => {
     setLoading(true);
-    console.log("poop", selectedValue);
-
     switch (selectedValue) {
       case "trivia":
         const triviaFact = await getFact(numericValue, selectedValue);
@@ -106,6 +103,15 @@ const Home: React.FC = () => {
         setFact(yearFact);
         setLoading(false);
     }
+  };
+
+  const handleRandomClick = async () => {
+    console.log("poopy");
+    setLoading(true);
+    const randomNumber = Math.floor(Math.random() * 201) - 100;
+    const triviaFact = await getFact(randomNumber, "trivia");
+    setFact(triviaFact);
+    setLoading(false);
   };
 
   const handleYearSelect = (year: string) => {
@@ -226,7 +232,14 @@ const Home: React.FC = () => {
                         color="light"
                         disabled={!isValid}
                       >
-                        Fetch
+                        Get Fact
+                      </IonButton>
+                      <IonButton
+                        expand="full"
+                        onClick={handleRandomClick}
+                        color="light"
+                      >
+                        Random Number Trivia Fact
                       </IonButton>
                     </>
                   </IonCardContent>
