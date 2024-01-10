@@ -11,3 +11,23 @@ export const fetchData = async () => {
     console.error(error);
   }
 };
+
+export const getTriviaFact = async (num: number) => {
+  try {
+    const response = await axios.get(`${BASE_URL}/${num}`);
+    return response.data;
+  } catch (error) {
+    // Handle error
+    console.error(error);
+  }
+};
+
+export const getMathFact = async (num: number) => {
+  try {
+    const response = await axios.get(`${BASE_URL}/${num}/math`);
+    return response.data;
+  } catch (error) {
+    // Handle error
+    console.error(error);
+  }
+};

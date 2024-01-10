@@ -1,3 +1,3 @@
-import { fetchData } from "./numbersService";
+import { fetchData, getMathFact, getTriviaFact } from "./numbersService";
 
-export { fetchData };
+export { fetchData, getMathFact, getTriviaFact };
