@@ -140,7 +140,6 @@ const Home: React.FC = () => {
                 </IonCard>
               </IonCol>
             </IonRow>
-
             <IonRow>
               <IonCol
                 style={{
@@ -160,7 +159,17 @@ const Home: React.FC = () => {
                       <div className="loader"></div>
                     </div>
                   ) : (
-                    <>{fact}</>
+                    <div
+                      style={{
+                        padding: "24px",
+                        display: "flex",
+                        justifyContent: "center",
+                        alignContent: "center",
+                        alignItems: "center",
+                      }}
+                    >
+                      <h2>{fact}</h2>
+                    </div>
                   )}
                 </IonCard>
               </IonCol>
