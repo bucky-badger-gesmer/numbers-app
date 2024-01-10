@@ -1,3 +1,3 @@
-import { getMathFact, getTriviaFact } from "./numbersService";
+import { getFact, getMathFact, getTriviaFact } from "./numbersService";
 
-export { getMathFact, getTriviaFact };
+export { getFact, getMathFact, getTriviaFact };

@@ -21,6 +21,15 @@ const fetchData = async (
   }
 };
 
+export const getFact = async (
+  num: number,
+  type: "trivia" | "math" | "date" | "year"
+) => {
+  const fact = await fetchData(num, type);
+  console.log("fact", fact);
+  return fact;
+};
+
 export const getTriviaFact = async (num: number) => {
   return fetchData(num, "trivia");
 };

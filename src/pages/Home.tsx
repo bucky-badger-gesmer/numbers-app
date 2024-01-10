@@ -18,14 +18,18 @@ import {
   IonToolbar,
 } from "@ionic/react";
 import "./Home.css";
-import { getTriviaFact } from "../services";
+import { getFact, getTriviaFact } from "../services";
 import { useEffect, useState } from "react";
 
 const Home: React.FC = () => {
+  const [selectedValue, setSelectedValue] = useState<
+    "trivia" | "math" | "date" | "year"
+  >("trivia");
   const [loading, setLoading] = useState(true);
   const [isTouched, setIsTouched] = useState(false);
   const [isValid, setIsValid] = useState<boolean>();
   const [numericValue, setNumericValue] = useState<number>(0);
+  const [yearValue, setYearValue] = useState<number>(2024);
   const [fact, setFact] = useState<string>("");
 
   useEffect(() => {
@@ -59,18 +63,113 @@ const Home: React.FC = () => {
 
     if (value === "") return;
 
-    validateNumericInput(value) !== null ? setIsValid(true) : setIsValid(false);
+    if (selectedValue === "year") {
+      validateNumber(value);
+    } else {
+      validateNumericInput(value) !== null
+        ? setIsValid(true)
+        : setIsValid(false);
+    }
   };
 
   const markTouched = () => {
     setIsTouched(true);
   };
 
+  const validateNumber = (input: string): boolean => {
+    const regex = /^-?(3000|[12]?[0-9]{1,3})$/;
+    const isValid = regex.test(input);
+    setNumericValue(+input);
+    console.log("poopnumber", isValid);
+    return isValid;
+  };
+
   const handleClick = async () => {
     setLoading(true);
-    const fact = await getTriviaFact(numericValue);
-    setFact(fact);
-    setLoading(false);
+    console.log("poop", selectedValue);
+
+    switch (selectedValue) {
+      case "trivia":
+        const triviaFact = await getFact(numericValue, selectedValue);
+        setFact(triviaFact);
+        setLoading(false);
+        break;
+      case "math":
+        const mathFact = await getFact(numericValue, selectedValue);
+        setFact(mathFact);
+        setLoading(false);
+      case "year":
+        const yearFact = await getFact(-2999, selectedValue);
+        setFact(yearFact);
+        setLoading(false);
+    }
+  };
+
+  const handleYearSelect = (year: string) => {
+    setYearValue(+year);
+    setIsValid(true);
+  };
+
+  const renderResult = () => {
+    switch (selectedValue) {
+      case "trivia":
+        return (
+          <IonInput
+            className={`${isValid && "ion-valid"} ${
+              isValid === false && "ion-invalid"
+            } ${isTouched && "ion-touched"}`}
+            type="email"
+            fill="solid"
+            label="Number"
+            labelPlacement="floating"
+            helperText="Enter a valid numeric value"
+            errorText="Invalid numeric value. Repeating 0's is not a valid value."
+            onIonInput={(event) => validate(event)}
+            onIonBlur={() => markTouched()}
+          ></IonInput>
+        );
+      case "math":
+        return (
+          <IonInput
+            className={`${isValid && "ion-valid"} ${
+              isValid === false && "ion-invalid"
+            } ${isTouched && "ion-touched"}`}
+            type="number"
+            fill="solid"
+            label="Number"
+            labelPlacement="floating"
+            helperText="Enter a valid numeric value"
+            errorText="Invalid numeric value. Repeating 0's is not a valid value."
+            onIonInput={(event) => validate(event)}
+            onIonBlur={() => markTouched()}
+          ></IonInput>
+        );
+      case "year":
+        const years = [];
+        for (let i = 2024; i >= 0; i--) {
+          years.push(i);
+        }
+
+        return (
+          <IonInput
+            className={`${isValid && "ion-valid"} ${
+              isValid === false && "ion-invalid"
+            } ${isTouched && "ion-touched"}`}
+            type="email"
+            fill="solid"
+            label="Number"
+            labelPlacement="floating"
+            helperText="Enter a valid numeric value"
+            errorText="Invalid numeric value. Repeating 0's is not a valid value."
+            onIonInput={(event) => validate(event)}
+            onIonBlur={() => markTouched()}
+          ></IonInput>
+        );
+      case "date":
+        return <>DATE</>;
+      default:
+        return;
+    }
   };
 
   return (
@@ -103,30 +202,21 @@ const Home: React.FC = () => {
                   }}
                 >
                   <IonCardHeader>
-                    <IonCardTitle>Try out the Numbers API</IonCardTitle>
+                    <IonCardTitle>Try the Numbers API</IonCardTitle>
                   </IonCardHeader>
                   <IonCardContent>
                     <>
                       <IonLabel>Choose Type</IonLabel>
-                      <IonSelect defaultValue="apple">
-                        <IonSelectOption value="apple">Trivia</IonSelectOption>
-                        <IonSelectOption value="banana">Math</IonSelectOption>
-                        <IonSelectOption value="orange">Date</IonSelectOption>
-                        <IonSelectOption value="orange">Year</IonSelectOption>
+                      <IonSelect
+                        value={selectedValue}
+                        onIonChange={(e) => setSelectedValue(e.detail.value)}
+                      >
+                        <IonSelectOption value="trivia">Trivia</IonSelectOption>
+                        <IonSelectOption value="math">Math</IonSelectOption>
+                        <IonSelectOption value="date">Date</IonSelectOption>
+                        <IonSelectOption value="year">Year</IonSelectOption>
                       </IonSelect>
-                      <IonInput
-                        className={`${isValid && "ion-valid"} ${
-                          isValid === false && "ion-invalid"
-                        } ${isTouched && "ion-touched"}`}
-                        type="email"
-                        fill="solid"
-                        label="Number"
-                        labelPlacement="floating"
-                        helperText="Enter a valid numeric value"
-                        errorText="Invalid numeric value. '000' is not a valid value."
-                        onIonInput={(event) => validate(event)}
-                        onIonBlur={() => markTouched()}
-                      ></IonInput>
+                      {renderResult()}
                       <IonButton
                         expand="full"
                         onClick={handleClick}
