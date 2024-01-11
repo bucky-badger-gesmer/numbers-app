@@ -105,8 +105,15 @@ const Home: React.FC = () => {
     }
   };
 
-  const handleRandomClick = async () => {
-    console.log("poopy");
+  const handleRandomMathClick = async () => {
+    setLoading(true);
+    const randomNumber = Math.floor(Math.random() * 201) - 100;
+    const triviaFact = await getFact(randomNumber, "math");
+    setFact(triviaFact);
+    setLoading(false);
+  };
+
+  const handleRandomTriviaClick = async () => {
     setLoading(true);
     const randomNumber = Math.floor(Math.random() * 201) - 100;
     const triviaFact = await getFact(randomNumber, "trivia");
@@ -184,7 +191,7 @@ const Home: React.FC = () => {
   return (
     <IonPage>
       <IonHeader>
-        <IonToolbar color="tertiary">
+        <IonToolbar>
           <IonTitle>Numbers API App</IonTitle>
         </IonToolbar>
       </IonHeader>
@@ -226,23 +233,57 @@ const Home: React.FC = () => {
                         <IonSelectOption value="year">Year</IonSelectOption>
                       </IonSelect>
                       {renderResult()}
-                      <IonButton
-                        expand="full"
-                        onClick={handleClick}
-                        color="light"
-                        disabled={!isValid}
+                      <div
+                        style={{
+                          display: "flex",
+                          flexDirection: "column",
+                          justifyContent: "space-between",
+                        }}
                       >
-                        Get Fact
-                      </IonButton>
-                      <IonButton
-                        expand="full"
-                        onClick={handleRandomClick}
-                        shape="round"
-                        // fill="outline"
-                        color="tertiary"
-                      >
-                        Random Number Trivia Fact
-                      </IonButton>
+                        <IonButton
+                          expand="full"
+                          onClick={handleClick}
+                          shape="round"
+                          color="primary"
+                          disabled={!isValid}
+                        >
+                          Get Fact
+                        </IonButton>
+                        <IonButton
+                          expand="full"
+                          onClick={handleRandomTriviaClick}
+                          shape="round"
+                          color="secondary"
+                        >
+                          Random Trivia Fact
+                        </IonButton>
+                        <IonButton
+                          expand="full"
+                          onClick={handleRandomMathClick}
+                          shape="round"
+                          color="tertiary"
+                        >
+                          Random Math Fact
+                        </IonButton>
+                        <IonButton
+                          disabled={true}
+                          expand="full"
+                          onClick={handleRandomMathClick}
+                          shape="round"
+                          color="success"
+                        >
+                          Random Date Fact
+                        </IonButton>
+                        <IonButton
+                          disabled={true}
+                          expand="full"
+                          onClick={handleRandomMathClick}
+                          shape="round"
+                          color="warning"
+                        >
+                          Random Year Fact
+                        </IonButton>
+                      </div>
                     </>
                   </IonCardContent>
                 </IonCard>
