@@ -2,7 +2,7 @@ name: Numbers API App Pull Request
 
 on:
   pull_request:
-    branches: [master]
+    branches: [main]
 
 jobs:
   test_pull_request:
