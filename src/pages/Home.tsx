@@ -218,7 +218,7 @@ const Home: React.FC = () => {
                   }}
                 >
                   <IonCardHeader>
-                    <IonCardTitle>Try the Numbers API</IonCardTitle>
+                    <IonCardTitle>Try the Numbers API, A-ARON!</IonCardTitle>
                   </IonCardHeader>
                   <IonCardContent>
                     <>
